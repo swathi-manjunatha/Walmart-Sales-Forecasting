@@ -126,6 +126,8 @@ The project utilizes the following datasets:
 4. **Future Enhancements**:
    - Incorporate additional features like local events or economic indicators to refine forecasting.
    - Implement time-series models (e.g., ARIMA, SARIMA) to complement machine learning predictions.
+   - Advanced Modeling - Combine the strengths of machine learning (Random Forest) and time-series forecasting into a hybrid model for improved  accuracy.
+
 
 ---
 
