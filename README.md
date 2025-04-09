@@ -59,16 +59,3 @@ This project forecasts weekly sales for Walmart stores using historical data and
 - **Evaluation**: Weighted MAE, T-Test
 
 ---
-
-## 🚀 How to Run
-
-```bash
-# Clone the repository
-git clone https://github.com/your-username/walmart-sales-forecasting.git
-cd walmart-sales-forecasting
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Launch the notebook
-jupyter notebook walmart_sales_forecasting.ipynb
