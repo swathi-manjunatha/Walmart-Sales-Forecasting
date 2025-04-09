@@ -1,64 +1,74 @@
-# 📈 Walmart Sales Forecasting – Time Series Analysis
+# 📈 Walmart Sales Forecasting – Machine Learning Model Comparison
 
 ## 📌 Overview
-This project focuses on building a time series forecasting model for **Walmart’s weekly sales data** across multiple stores and departments. The objective is to create accurate, data-driven forecasts that help optimize inventory and operations using historical patterns, seasonality, and event-driven factors.
+This project forecasts weekly sales for Walmart stores using historical data and multiple machine learning models. The objective is to enable accurate prediction of weekly sales across different stores and departments, helping optimize **inventory**, **staffing**, and **promotions**. Models were evaluated with higher sensitivity to **holiday periods**, where accurate forecasting is crucial.
 
 ---
 
 ## 📊 Dataset
-- **Source**: [Walmart Kaggle Dataset](https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting/data)
-- **Records**: ~420,000 weekly sales entries  
-- **Time Period**: 2010 – 2012  
-- **Features**: Store, Dept, Date, Weekly_Sales, IsHoliday, Temperature, Fuel_Price, CPI, Unemployment
+- **Source**: [Kaggle – Walmart Store Sales Forecasting](https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting)
+- **Size**: ~420,000 records  
+- **Features**: Store, Dept, Date, Weekly_Sales, IsHoliday, Temperature, Fuel_Price, CPI, Unemployment  
+- **Time Range**: 2010–2012  
 
 ---
 
-## 🔁 Project Workflow
+## 🔁 Workflow Summary
 
 ### 1. 🧹 Data Preprocessing
-- Merged datasets (features, stores, sales)
-- Handled missing values and outliers
-- Converted weekly date series to time-based indices
+- Merged multiple CSVs (`stores.csv`, `features.csv`, `train.csv`)
+- Extracted **datetime-based features** (year, month, week)
+- Created **lag features** and **3-week rolling averages**
+- Applied **RobustScaler** to handle outliers
+- Transformed store types into numerical format
 
 ### 2. 📊 Exploratory Data Analysis
-- Visualized trends, store-level seasonality, and holiday spikes
-- Analyzed effects of CPI, Fuel Prices, and Unemployment on sales
-- Correlated external regressors with target variable (Weekly_Sales)
+- Identified **holiday spikes** and **seasonal sales trends**
+- Analyzed influence of **external factors** (e.g., fuel price, CPI)
+- Discovered high variance in larger stores and seasonal categories
 
-### 3. 📈 Time Series Modeling
-- Used **SARIMAX (Seasonal ARIMA with Exogenous Variables)** to model sales  
-- Incorporated **holiday flags**, **CPI**, and **Fuel_Price** as external variables  
-- Handled non-stationarity and seasonal decomposition  
+### 3. 🤖 Model Building
+- Implemented:
+  - **Linear Regression**
+  - **Random Forest Regressor**
+- Randomly assigned test samples into **control** and **treatment** groups for model comparison
+- Holiday weeks assigned **5x error weights** using **Weighted Mean Absolute Error (WMAE)**
 
-### 4. ✅ Evaluation
-- Performance metrics: **Root Mean Square Error (RMSE)** and **Akaike Information Criterion (AIC)**  
-- Visual validation with prediction vs actuals across stores and departments
-
----
-
-## 📦 Technologies Used
-- **Python**: pandas, numpy, matplotlib, seaborn  
-- **Modeling**: statsmodels (SARIMAX), scipy, sklearn  
-- **Visualization**: seaborn, matplotlib  
+### 4. ✅ Model Evaluation
+- Compared models using:
+  - **WMAE** (Weighted Mean Absolute Error)
+  - **T-Test** for statistical significance
+- Prioritized holiday weeks due to their operational importance
 
 ---
 
-## 🔍 Key Insights
-- Sales exhibit strong **weekly seasonality** and are significantly impacted by **holidays**.  
-- SARIMAX performed well in capturing both **trend** and **external factor influence**.  
-- Exogenous variables like **CPI** and **Fuel Price** provided improved prediction stability.
+## 📈 Results
+
+| Model               | WMAE Score     | Notes                              |
+|--------------------|----------------|-------------------------------------|
+| Linear Regression   | ~22,000        | Baseline model                     |
+| Random Forest       | ~18,000        | Lower error & better performance   |
+
+> 📊 **Conclusion**: Random Forest outperformed Linear Regression with a **statistically significant difference (p < 0.05)**. It’s recommended for production use due to its robustness in handling seasonal spikes and feature interactions.
+
+---
+
+## 🧰 Tech Stack
+- **Language**: Python  
+- **Libraries**: pandas, numpy, matplotlib, seaborn, scikit-learn, scipy  
+- **Evaluation**: Weighted MAE, T-Test
 
 ---
 
 ## 🚀 How to Run
 
 ```bash
-# 1. Clone the repository
+# Clone the repository
 git clone https://github.com/your-username/walmart-sales-forecasting.git
 cd walmart-sales-forecasting
 
-# 2. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# 3. Launch the notebook
+# Launch the notebook
 jupyter notebook walmart_sales_forecasting.ipynb
